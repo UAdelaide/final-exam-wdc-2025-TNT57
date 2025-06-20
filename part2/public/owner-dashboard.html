@@ -125,6 +125,17 @@
           }
         }
 
+        // Function to load the logged user dogs
+        const myDogs = ref([]);
+        async function loadDogs(){
+          try {
+            const res = await fetch('/api/users/my-dogs');
+            myDogs.value = await res.json();
+          } catch (err) {
+            error.value = 'Failed to load dogs';
+          }
+        }
+
         // Logout function
         // handle by frontend as backend already destroy session
         async function logout(){
@@ -148,6 +159,7 @@
 
         onMounted(() => {
           loadWalks();
+          loadDogs(); // Call here so that dog list would be on page load
         });
 
         return {
