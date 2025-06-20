@@ -58,19 +58,17 @@
   </div>
 
   <script>
-    const { createApp, ref, onMounted } = Vue;
+    const { createApp } = Vue;
     createApp({
-      setup() {
-        const message = ref()
-      }
-
       data() {
         return {
           message: 'Welcome to the Dog Walking Service!',
-          loginForm: { username: '', password: '' }
+          loginForm: { username: '', password: '' },
+          dogs: [] // Add this line to store registered dogs
         };
       },
       // Vue.js login method to handle API authentication
+      methods: {
         async login(){
           try {
             const response = await fetch('/api/users/login', {
@@ -91,8 +89,28 @@
           } catch (error){
             alert('Login error');
           }
-        }
+        },
 
+        // Fetch all dogs and assign a random dogs img
+        async loadDogs(){
+          try {
+            const res = await fetch('/api/dogs');
+            const dogList = await res.json();
+
+            for (let dog of dogList){
+              const imgRes = await fetch('https://dog.ceo/api/breeds/image/random');
+              const imgData = await imgRes.json();
+              dogphoto = imgData.message;
+            }
+            this.dogs = dogList;
+          } catch (err){
+            console.error('Failed to load dogs:', error);
+          }
+        }
+      },
+      mounted() {
+        this.loadDogs(); //Load dogs when page load
+      }
     }).mount('#app');
   </script>
 
