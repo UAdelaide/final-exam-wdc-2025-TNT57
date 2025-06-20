@@ -46,7 +46,7 @@
         const walks = ref([]);
         const message = ref('');
         const error = ref('');
-        const user = 3;
+        // const user = 3; Remove this line (hardcoded value)
 
         async function loadWalkRequests() {
           try {
@@ -58,12 +58,25 @@
           }
         }
 
+        // Function get current user
+        const walkerID = ref(null);
+        async function getCurrentUser(){
+          try {
+            const res = await fetch('/api/users/me');
+
+            const data = await res.json();
+            walkerID.value = data.user_id;
+          } catch (err) {
+            error.value = 'Failed to get current user';
+          }
+        }
+
         async function applyToWalk(requestId) {
           try {
             const res = await fetch(`/api/walks/${requestId}/apply`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ walker_id: user })
+              body: JSON.stringify({ walker_id: walkerID.value }) // Replace user with walkerID value
             });
             const result = await res.json();
 
@@ -100,6 +113,7 @@
 
         onMounted(() => {
           loadWalkRequests();
+          getCurrentUser();
         });
 
         return {
@@ -107,7 +121,8 @@
           message,
           error,
           applyToWalk,
-          logout
+          logout,
+          walkerID // Add walkerID in return
         };
       }
     }).mount('#app');
