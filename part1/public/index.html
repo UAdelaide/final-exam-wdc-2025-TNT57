@@ -31,8 +31,8 @@
     <div id="app" class="container">
         <h1>Random Dog Image</h1>
         <button type="button" @click="getDogImage" Get Random Dog ></button>
-        <div v-if="dogImage">
-        <img src="dogImage" alt="A Random Dog" style="margin-top: 20px; max-width: 80%; border-radius: 10px;" />
+        <div v-if="dogImage" style="margin-top: 30px;">
+        <img src="dogImage" alt="A Random Dog" style="max-width: 80%; height: auto; border: 3px solid white; border-radius: 10px;" />
         </div>
     </div>
 </body>
