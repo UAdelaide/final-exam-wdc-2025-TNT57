@@ -143,7 +143,14 @@ let db;
 
 
 
-
+// Route to return a list of all dogs with their size and owner's username.
+app.get('/', async (req, res) => {
+    try {
+        const [dogs] = await db.execute('SELECT ')
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to fetch data'});
+    }
+});
 
 
 app.use(express.static(path.join(__dirname, 'public')));
