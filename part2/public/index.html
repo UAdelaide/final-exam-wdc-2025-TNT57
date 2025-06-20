@@ -60,6 +60,10 @@
   <script>
     const { createApp, ref, onMounted } = Vue;
     createApp({
+      setup() {
+        const message = ref()
+      }
+
       data() {
         return {
           message: 'Welcome to the Dog Walking Service!',
@@ -67,7 +71,6 @@
         };
       },
       // Vue.js login method to handle API authentication
-      methods: {
         async login(){
           try {
             const response = await fetch('/api/users/login', {
@@ -89,7 +92,7 @@
             alert('Login error');
           }
         }
-      }
+
     }).mount('#app');
   </script>
 
