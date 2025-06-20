@@ -153,7 +153,7 @@ app.get('/api/dogs', async (req, res) => {
             `);
             res.json(dogs);
     } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch data'});
+        res.status(500).json({ error: 'Failed to fetch data' });
     }
 });
 
@@ -170,7 +170,7 @@ app.get('api/walkrequests/open', async (req, res) => {
             `);
             res.json(open_requests);
     } catch (err){
-        res.status(500).json({ error: 'Failed to fetch data'});
+        res.status(500).json({ error: 'Failed to fetch data' });
     }
 });
 
@@ -182,7 +182,7 @@ app.get('api/walkers/summary', async (req, res) => {
             `);
             res.json(walkers);
     } catch (err){
-        res.status(500).json({ error: 'Failed to fetch data'});
+        res.status(500).json({ error: 'Failed to fetch data' });
     }
 });
 
