@@ -174,6 +174,15 @@ app.get('api/walkrequests/open', async (req, res) => {
     }
 });
 
+// Route to return a summary of each walker with their average rating and number of completed walks.
+app.get('api/walkers/summary', async (req, res) => {
+    try {
+        const [walkers] = await db.execute(`
+            SELECT `)
+    } catch (err){
+        res.status(500).json({ error: 'Failed to fetch data'});
+    }
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
