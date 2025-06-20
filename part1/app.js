@@ -144,7 +144,7 @@ let db;
 
 
 // Route to return a list of all dogs with their size and owner's username.
-app.get('/', async (req, res) => {
+app.get('/api/dogs', async (req, res) => {
     try {
         const [dogs] = await db.execute(`
             SELECT Dogs.name, Dogs.size, Users.username as owner_username
@@ -159,11 +159,11 @@ app.get('/', async (req, res) => {
 
 
 app.use(express.static(path.join(__dirname, 'public')));
-// app.listen(port, () => {
-//   console.log(`Server running on port ${port}`);
-//   console.log(`Access your API at:`);
-//   console.log(`- http://localhost:${port}/api/dogs`);
-// });
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+  console.log(`Access your API at:`);
+  console.log(`- http://localhost:${port}/api/dogs`);
+});
 
 
 module.exports = app;
