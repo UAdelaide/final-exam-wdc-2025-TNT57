@@ -59,15 +59,15 @@
         }
 
         // Function get current user
-        const walkerID = ref(null);
+        const walkerID = ref(null); // Store id of the currently logged in walker
         async function getCurrentUser(){
           try {
-            const res = await fetch('/api/users/me');
+            const res = await fetch('/api/users/me'); // Fetch from backend session
 
             const data = await res.json();
             walkerID.value = data.user_id;
           } catch (err) {
-            error.value = 'Failed to get current user';
+            error.value = 'Failed to get current user'; // Error message
           }
         }
 
