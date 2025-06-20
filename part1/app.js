@@ -163,7 +163,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 const port = 8080;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
-  console.log(`- http://localhost:${port}/api/dogs`);
 });
 
 
