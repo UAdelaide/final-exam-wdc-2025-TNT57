@@ -161,11 +161,11 @@ app.get('/api/dogs', async (req, res) => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 const port = 8080;
-// app.listen(port, () => {
-//   console.log(`Server running on port ${port}`);
-//   console.log(`Access your API at:`);
-//   console.log(`- http://localhost:${port}/api/dogs`);
-// });
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+  console.log(`Access your API at:`);
+  console.log(`- http://localhost:${port}/api/dogs`);
+});
 
 
 module.exports = app;
