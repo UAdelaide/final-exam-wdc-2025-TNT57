@@ -159,6 +159,8 @@ app.get('/api/dogs', async (req, res) => {
 
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
   console.log(`Access your API at:`);
