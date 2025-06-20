@@ -11,7 +11,7 @@
             margin: 0;
             padding: 0;
         }
-        .btn{
+        .btn{ /* Violate Kinematic Load: tiny button*/
             border: 0.5px solid #000;
             margin: 5px;
             padding: 1px;  /* Extremely small padding */
@@ -31,7 +31,7 @@
     <div id="app" class="container">
         <h1>Random Dog Image</h1>
         <button type="button" @click="getDogImage" class="btn">
-            Button
+            Button <!-- Violate Cognitive Load: unlabeled button that is not clear of its functionality-->
         </button>
 
         <div v-if="dogImage">
