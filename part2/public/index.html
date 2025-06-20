@@ -30,6 +30,25 @@
     <a href="walker-dashboard.html" class="btn btn-outline-success">Walker Dashboard</a>
     -->
 
+    <br><br>
+    <h2> All Registered Dogs</h2>
+    <table class="table table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>Dog ID</th>
+          <th>Name</th>
+          <th>Size</th>
+          <th>Owner ID</th>
+          <th>Photo</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr v-for="(dog, index) in dogs" :key="index">
+
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <script>
