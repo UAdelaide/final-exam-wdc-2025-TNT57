@@ -64,8 +64,8 @@
           try {
             const res = await fetch('/api/users/me'); // Fetch from backend session
 
-            const data = await res.json();
-            walkerID.value = data.user_id;
+            const data = await res.json(); // Parse Json response
+            walkerID.value = data.user_id; // Store the user's ID in the walkerId ref
           } catch (err) {
             error.value = 'Failed to get current user'; // Error message
           }
