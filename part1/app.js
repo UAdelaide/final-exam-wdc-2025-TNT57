@@ -146,7 +146,11 @@ let db;
 // Route to return a list of all dogs with their size and owner's username.
 app.get('/', async (req, res) => {
     try {
-        const [dogs] = await db.execute('SELECT ')
+        const [dogs] = await db.execute(
+            SELECT Dogs.name, Dogs.size, Users.username as owner_username
+            FROM Dogs
+            JOIN Users ON Dogs.owner_id = Users.user_id
+            ');
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch data'});
     }
