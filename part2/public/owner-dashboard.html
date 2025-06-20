@@ -21,8 +21,16 @@
       <div class="card-body">
         <form @submit.prevent="submitWalkRequest">
           <div class="mb-3">
-            <label class="form-label">Dog ID</label>
-            <input v-model="form.dog_id" type="number" class="form-control" required>
+            <label class="form-label">Select Dog</label>
+            <!-- Remove this input field and replace
+            <input v-model="form.dog_id" type="number" class="form-control" required> -->
+            <select v-model="form.dog_id" class="form-select" required>
+              <option disabled value="">-- Select your Dog --</option>
+              <option v-for="dog in myDogs" :key="dog.dog_id" :value="dog.dog_id">
+                {{ dog.name }}
+              </option>
+            </select>
+
           </div>
           <div class="mb-3">
             <label class="form-label">Requested Date & Time</label>
