@@ -178,13 +178,18 @@ app.get('/api/walkrequests/open', async (req, res) => {
 app.get('/api/walkers/summary', async (req, res) => {
     try {
         const [walkers] = await db.execute(`
-            SELECT Users.username as walker_username, COUNT(WalkApplications.rating_id) as total_ratings, ROUND(WalkApplications.rating) as average_rating,
-            COUNT(DISTINCT CASE WHEN WalkApplications.status = 'accepted) as completed_walks
+            SELECT Users.username as walker_username,
+            COUNT(DISTINCT WalkRatings.rating_id) as total_ratings,
+            ROUND(AVG(WalkRatings.rating), 1) as average_rating,
+            COUNT(DISTINCT CASE WHEN WalkRequests.status = 'complete' AND WalkApplications.status = 'accepted'
+            THEN WalkRequests.request_id
+            END) as completed_walks
             FROM Users
             LEFT JOIN WalkApplications ON Users.user_id = WalkApplications.walker_id
-            LEFT JOIN WalkRatings ON WalkApplications.walker_id = WalkRatings.walker_id
+            LEFT JOIN WalkRequests ON WalkApplications.request_id = WalkRequests.request_id
+            LEFT JOIN WalkRatings ON Users.user_id = WalkRatings.walker_id
             WHERE Users.role = 'walker'
-            GROUP BY Users.user_id, Users.username
+            GROUP BY Users.user_id
             `);
             res.json(walkers);
     } catch (err){
