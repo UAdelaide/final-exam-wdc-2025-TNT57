@@ -158,7 +158,7 @@ app.get('/api/dogs', async (req, res) => {
 });
 
 // Route to return all open walk requests
-app.get('api/walkrequests/open', async (req, res) => {
+app.get('/api/walkrequests/open', async (req, res) => {
     try {
         const [open_requests] = await db.execute(`
             SELECT WalkRequests.request_id, Dogs.name as dog_name, WalkRequests.requested_time, WalkRequests.duration_minutes,
@@ -175,7 +175,7 @@ app.get('api/walkrequests/open', async (req, res) => {
 });
 
 // Route to return a summary of each walker with their average rating and number of completed walks.
-app.get('api/walkers/summary', async (req, res) => {
+app.get('/api/walkers/summary', async (req, res) => {
     try {
         const [walkers] = await db.execute(`
             SELECT * FROM WalkApplications
