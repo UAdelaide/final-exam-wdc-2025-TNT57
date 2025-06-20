@@ -33,9 +33,9 @@
         <button type="button" @click="getDogImage">
             Get Random Dog
         </button>
-        
+
         <div v-if="dogImage" style="margin-top: 30px;">
-        <img src="dogImage" alt="A Random Dog" style="max-width: 80%; height: auto; border: 3px solid white; border-radius: 10px;" />
+        <img :src="dogImage" alt="A Random Dog"/>
         </div>
     </div>
 </body>
