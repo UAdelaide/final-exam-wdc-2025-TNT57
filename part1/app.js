@@ -99,13 +99,41 @@ let db;
     `);
 
     // Insert data if table is empty
-    const [rows] = await db.execute('SELECT COUNT(*) AS count FROM *Users');
-    if (rows[0].count === 0) { // no data
+    const [rows] = await db.execute('SELECT COUNT(*) AS count FROM Users');
+    if (rows[0].count === 0) {
+      // Insert Users
       await db.execute(`
-        INSERT INTO books (title, author) VALUES
-        ('1984', 'George Orwell'),
-        ('To Kill a Mockingbird', 'Harper Lee'),
-        ('Brave New World', 'Aldous Huxley')
+        INSERT INTO Users (username, email, password_hash, role) VALUES
+        ('alice123', 'alice@example.com', 'hashed123', 'owner'),
+        ('bobwalker', 'bob@example.com', 'hashed456', 'walker'),
+        ('carol123', 'carol@example.com', 'hashed789', 'owner'),
+        ('john_doe123', 'john@example.com', 'hashed101', 'walker'),
+        ('jane_doe123', 'jane@example.com', 'hashed202', 'owner')
+      `);
+
+      // Insert Dogs
+      await db.execute(`
+        INSERT INTO Dogs (owner_id, name, size) VALUES
+        ((SELECT user_id FROM Users WHERE username = 'alice123'), 'Max', 'medium'),
+        ((SELECT user_id FROM Users WHERE username = 'carol123'), 'Bella', 'small'),
+        ((SELECT user_id FROM Users WHERE username = 'alice123'), 'Charlie', 'large'),
+        ((SELECT user_id FROM Users WHERE username = 'jane_doe123'), 'Milu', 'small'),
+        ((SELECT user_id FROM Users WHERE username = 'jane_doe123'), 'Nick', 'medium')
+      `);
+
+      // Insert Walk Requests
+      await db.execute(`
+        INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status) VALUES
+        ((SELECT dog_id FROM Dogs WHERE name = 'Max' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')),
+         '2025-06-10 08:00:00', 30, 'Parklands', 'open'),
+        ((SELECT dog_id FROM Dogs WHERE name = 'Bella' AND owner_id = (SELECT user_id FROM Users WHERE username = 'carol123')),
+         '2025-06-10 09:30:00', 45, 'Beachside Ave', 'accepted'),
+        ((SELECT dog_id FROM Dogs WHERE name = 'Charlie' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')),
+         '2025-06-11 10:00:00', 60, 'Central Park', 'open'),
+        ((SELECT dog_id FROM Dogs WHERE name = 'Milu' AND owner_id = (SELECT user_id FROM Users WHERE username = 'jane_doe123')),
+         '2025-06-11 15:30:00', 30, 'Riverside Trail', 'open'),
+        ((SELECT dog_id FROM Dogs WHERE name = 'Nick' AND owner_id = (SELECT user_id FROM Users WHERE username = 'jane_doe123')),
+         '2025-06-12 07:45:00', 15, 'Mountain View Park', 'completed')
       `);
     }
   } catch (err) {
