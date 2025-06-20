@@ -157,6 +157,17 @@ app.get('/api/dogs', async (req, res) => {
     }
 });
 
+// Route to return all open walk requests
+app.get('api/walkrequests/open', async (req, res) => {
+    try {
+        const [open_requests] = await db.execute(`
+            SELECT WalkRequests.request_id, WalkRequests.requested_time
+            `);
+    } catch (err){
+        res.status(500).json({ error: 'Failed to fetch data'});
+    }
+});
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 
