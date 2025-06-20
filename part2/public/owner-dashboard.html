@@ -9,8 +9,10 @@
 </head>
 <body class="bg-light">
   <div id="app" class="container py-4">
-    <h1 class="mb-4 text-primary">Owner Dashboard</h1>
-
+    <div style="display: flex; justify-content: space-between;">  <!-- Keep the logout button on the same line with the header -->
+      <h1 class="mb-4 text-primary">Owner Dashboard</h1>
+      <button type="button" @click="logout" class="btn" style="border: 2px solid red; color: red;">Logout</button> <!-- Add logout button -->
+    </div>
     <!-- Walk request form -->
     <div class="card mb-4">
       <div class="card-header bg-primary text-white">
@@ -115,6 +117,27 @@
           }
         }
 
+        // Logout function
+        // handle by frontend as backend already destroy session
+        async function logout(){
+          try {
+            // Destroy session with logout API
+            const res = await fetch('/api/users/logout', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' }  // Json format
+            });
+
+            if (res.ok){
+              // Redirect to login page
+              window.location.href = '/';
+            } else {
+              error.value = 'Logout failed'; // Error message
+            }
+          } catch (err) {
+            error.value = 'Logout failed'; // Error message
+          }
+        }
+
         onMounted(() => {
           loadWalks();
         });
@@ -124,7 +147,8 @@
           walks,
           message,
           error,
-          submitWalkRequest
+          submitWalkRequest,
+          logout // Export logout function
         };
       }
     }).mount('#app');

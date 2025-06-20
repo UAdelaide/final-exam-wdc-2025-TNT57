@@ -13,8 +13,23 @@
     <h1 class="mb-4 text-primary">{{ message }}</h1>
     <p class="lead">Connect with trusted walkers for your beloved dog!</p>
 
+
+    <!-- Login form to use Vue.js with API calls instead of HTML plain form submission -->
+    <form @submit.prevent="login">
+      <label for="username">Username</label><br>
+      <input v-model="loginForm.username" type="text" id="username" name="username" placeholder="E.g. alice123"><br>
+
+      <label for="password">Password:</label><br>
+      <input v-model="loginForm.password" type="password" id="password" name="password" placeholder="Enter the password"><br><br>
+
+      <button type="submit">Log In</button>
+    </form>
+
+    <!-- Remove these 2 from the home-login page
     <a href="owner-dashboard.html" class="btn btn-outline-primary me-2">Owner Dashboard</a>
     <a href="walker-dashboard.html" class="btn btn-outline-success">Walker Dashboard</a>
+    -->
+
   </div>
 
   <script>
@@ -22,8 +37,33 @@
     createApp({
       data() {
         return {
-          message: 'Welcome to the Dog Walking Service!'
+          message: 'Welcome to the Dog Walking Service!',
+          loginForm: { username: '', password: '' }
         };
+      },
+      // Vue.js login method to handle API authentication
+      methods: {
+        async login(){
+          try {
+            const response = await fetch('/api/users/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(this.loginForm) // Send data in json form
+            });
+            // Parse response
+            const data = await response.json();
+
+
+            // Check if login was successful
+            if (response.ok){
+              window.location.href = data.redirect; // Redirection
+            } else {
+              alert('Login failed:' + data.error); // Error message
+            }
+          } catch (error){
+            alert('Login error');
+          }
+        }
       }
     }).mount('#app');
   </script>

@@ -36,23 +36,63 @@ router.get('/me', (req, res) => {
 });
 
 // POST login (dummy version)
+// router.post('/login', async (req, res) => {
+//   const { email, password } = req.body;
+
+//   try {
+//     const [rows] = await db.query(`
+//       SELECT user_id, username, role FROM Users
+//       WHERE email = ? AND password_hash = ?
+//     `, [email, password]);
+
+//     if (rows.length === 0) {
+//       return res.status(401).json({ error: 'Invalid credentials' });
+//     }
+
+//     res.json({ message: 'Login successful', user: rows[0] });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Login failed' });
+//   }
+// });
+
+
+
+// POST login with session version
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body; // Take credentials from request
 
   try {
+    // Query the database
     const [rows] = await db.query(`
-      SELECT user_id, username, role FROM Users
-      WHERE email = ? AND password_hash = ?
-    `, [email, password]);
+      SELECT user_id, username, email, role FROM Users
+      WHERE username = ? AND password_hash = ?
+    `, [username, password]);
 
     if (rows.length === 0) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    res.json({ message: 'Login successful', user: rows[0] });
+    // Store user in the session
+    req.session.user = rows[0];
+
+    // On successful login go to Owner/Walker dashboard depend on their role
+    res.json({ message: 'Login successful', user: rows[0], redirect: rows[0].role === 'owner' ? '/owner-dashboard.html' : '/walker-dashboard.html' });
   } catch (error) {
     res.status(500).json({ error: 'Login failed' });
   }
 });
+
+
+// POST logout
+router.post('/logout', (req, res) => {
+  // Destroy user session and clear session data
+  req.session.destroy((err) => {
+    if (err){
+      return res.status(500).json({ error: 'Logout failed' });
+    }
+    res.json({ message: 'Logout successful '});
+  });
+});
+
 
 module.exports = router;

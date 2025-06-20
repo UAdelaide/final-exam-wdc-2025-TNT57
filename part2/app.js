@@ -1,8 +1,17 @@
 const express = require('express');
 const path = require('path');
 require('dotenv').config();
+const session = require('express-session');
 
 const app = express();
+
+// Session
+app.use(session({
+    secret: 'dog-walking-secret-key', // For session encryption
+    resave: false, // If unmodified, sesssion is not saved
+    saveUninitialized: false, // Session not created until storing something
+    cookie: { secure: false }
+}));
 
 // Middleware
 app.use(express.json());
