@@ -159,5 +159,11 @@ app.get('/', async (req, res) => {
 
 
 app.use(express.static(path.join(__dirname, 'public')));
+// app.listen(port, () => {
+//   console.log(`Server running on port ${port}`);
+//   console.log(`Access your API at:`);
+//   console.log(`- http://localhost:${port}/api/dogs`);
+// });
+
 
 module.exports = app;
