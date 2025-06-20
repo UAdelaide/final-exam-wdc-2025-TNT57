@@ -6,35 +6,35 @@
 
     <style>
         body {
-            background: linear-gradient(45deg, #ff0080, #00ff80, #8000ff, #ff8000);
+            background: linear-gradient( #ff0080, #00ff80, #8000ff, #ff8000);
             background-size: 400% 400%;
-            animation: rainbow 2s ease-in-out infinite alternate;
-            font-family: Comic Sans MS, cursive;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
+        }
+        .btn{
+            border: 0.5px solid #000;
+            margin: 5px;
+            padding: 1px;  /* Extremely small padding */
+            font-size: 8px;    /* Tiny font */
+            width: 35px;       /* Very narrow */
+            height: 20px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #ffff00;  /* ACCESSIBILITY VIOLATION: Poor contrast on rainbow background */
         }
     </style>
 </head>
 
 <body>
-    <!-- Poor navigation placement -->
-    <div class="navigation">
-        <button type="button" class="nav-btn">Home</button>
-        <button type="button" class="nav-btn">Dogs</button>
-        <button type="button" class="nav-btn">Walk</button>
-        <button type="button" class="nav-btn">Rate</button>
-        <button type="button" class="nav-btn">Contact</button>
-        <button type="button" class="nav-btn">About</button>
-    </div>
-
     <div id="app" class="container">
         <h1>Random Dog Image</h1>
-        <button type="button" @click="getDogImage">
-            Get Random Dog
+        <button type="button" @click="getDogImage" class="btn">
+            Button
         </button>
 
-        <div v-if="dogImage" style="margin-top: 30px;">
+        <div v-if="dogImage">
         <img v-bind:src="dogImage" alt="A Random Dog"/>
         </div>
     </div>
@@ -64,4 +64,5 @@
         }
     }).mount('#app');
 </script>
+
 </html>
