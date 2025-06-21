@@ -32,6 +32,24 @@ app.get('/api/dogs', async (req, res) => {
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '/public')));
 
+// Auth middleware
+function requireLogin(req, res, next) {
+    if (!req.session.user) {
+        return res.redirect('/');
+    }
+    next();
+}
+
+// Role based protection
+function requireRole(role) {
+    return function (req, res, next) {
+        if (!req.session.user || req.session.user.role !== role) {
+            return res.redirect('/');
+        }
+        next();
+    }
+}
+
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -40,7 +58,6 @@ app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
 
 
-// 
 
 // Export the app instead of listening here
 module.exports = app;
