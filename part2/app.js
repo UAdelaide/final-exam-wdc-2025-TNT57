@@ -16,7 +16,6 @@ app.use(session({
 
 // Middleware
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '/public')));
 
 // Role based protection
 function requireRole(role) {
@@ -37,6 +36,10 @@ app.get('/owner-dashboard.html', requireRole('owner'), (req, res) => {
 app.get('/walker-dashboard.html', requireRole('walker'), (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'walker-dashboard.html'));
 });
+
+// Move static file serving middleware
+app.use(express.static(path.join(__dirname, '/public')));
+
 
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
