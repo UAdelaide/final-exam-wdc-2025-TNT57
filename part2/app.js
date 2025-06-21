@@ -55,7 +55,10 @@ app.get('/owner-dashboard.html', requireRole('owner'), (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'owner-dashboard.html'));
 });
 
-
+// Protect walker dashboard route
+app.get('/walker-dashboard.html', requireRole('walker'), (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'walker-dashboard.html'));
+});
 
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
