@@ -32,14 +32,6 @@ app.get('/api/dogs', async (req, res) => {
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '/public')));
 
-// Auth middleware
-function requireLogin(req, res, next) {
-    if (!req.session.user) {
-        return res.redirect('/');
-    }
-    next();
-}
-
 // Role based protection
 function requireRole(role) {
     return function (req, res, next) {
