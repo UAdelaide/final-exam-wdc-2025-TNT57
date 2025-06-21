@@ -47,8 +47,10 @@ function requireRole(role) {
             return res.redirect('/');
         }
         next();
-    }
+    };
 }
+
+
 
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
