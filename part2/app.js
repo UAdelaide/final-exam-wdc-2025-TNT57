@@ -50,6 +50,11 @@ function requireRole(role) {
     };
 }
 
+// Protect owner dashboard route
+app.get('/owner-dashboard.html', requireRole('owner'), (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'owner-dashboard.html'));
+});
+
 
 
 // Routes
